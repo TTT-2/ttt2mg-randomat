@@ -37,10 +37,8 @@ SWEP.Primary.Ammo = "none"
 SWEP.Primary.ClipsSize = 1
 SWEP.Primary.DefaultClip = 1
 
-function SWEP:Initialize()
-	util.PrecacheSound("weapons/c4_initiate.wav")
-
-	if CLIENT then
+if CLIENT then
+	function SWEP:Initialize()
 		self:AddTTT2HUDHelp("ttt2_weapon_randomat_help_msb1")
 	end
 end
