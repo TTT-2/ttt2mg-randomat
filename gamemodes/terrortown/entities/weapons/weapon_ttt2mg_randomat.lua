@@ -44,21 +44,20 @@ if CLIENT then
 end
 
 function SWEP:PrimaryAttack()
-	if CLIENT then return end
+	if CLIENT or not minigames then return end
 
-	minigame = minigames.Select()
+	local minigame = minigames.Select()
 
-	if not minigame then
-		self:Remove()
+	if minigame then
+		ActivateMinigame(minigame)
 
-		return
+		local owner = self:GetOwner()
+
+		DamageLog("[TTT2][MINIGAME]: " .. owner:Nick() .. " [" .. owner:GetRoleString() .. "] used their Randomat MG")
+
+		self:SetNextPrimaryFire(CurTime() + 10) -- theoretically useless if it is getting removed instantly
 	end
 
-	ActivateMinigame(minigame)
-
-	DamageLog("[TTT2][MINIGAME] : " .. self:GetOwner():Nick() .. " [" .. self:GetOwner():GetRoleString() .. "] used their Randomat MG")
-
-	self:SetNextPrimaryFire(CurTime() + 10)
 	self:Remove()
 end
 
