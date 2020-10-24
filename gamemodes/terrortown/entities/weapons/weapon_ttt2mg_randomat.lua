@@ -56,7 +56,7 @@ function SWEP:PrimaryAttack()
 
 	ActivateMinigame(minigame)
 
-	DamageLog("[TTT2][MINIGAME] : " .. self:GetOwner():Nick() .. " [" .. self:GetOwner():GetRoleString() .. "] used their Randomat X")
+	DamageLog("[TTT2][MINIGAME] : " .. self:GetOwner():Nick() .. " [" .. self:GetOwner():GetRoleString() .. "] used their Randomat MG")
 
 	self:SetNextPrimaryFire(CurTime() + 10)
 	self:Remove()
