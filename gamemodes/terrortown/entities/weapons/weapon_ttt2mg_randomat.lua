@@ -1,20 +1,18 @@
-
--- include("includes/modules/minigames.lua")
 if SERVER then
-  AddCSLuaFile()
-elseif CLIENT then
-  SWEP.ViewModelFOV = 60
-  SWEP.ViewModelFlip = false
+	resource.AddFile("materials/vgui/ttt/icon_randomat")
 
-  SWEP.EquipMenuData = {
-    type = "weapon",
-    name = "Randommat X",
-    desc = "Randomat X starts a random minigame!"
-  }
+	AddCSLuaFile()
+else -- CLIENT
+	SWEP.ViewModelFOV = 60
+	SWEP.ViewModelFlip = false
 
-  SWEP.Icon = "VGUI/ttt/icon_randomat"
+	SWEP.EquipMenuData = {
+		type = "item_weapon",
+		name = "ttt2_weapon_randomat_name",
+		desc = "ttt2_weapon_randomat_desc"
+	}
 
-  function SWEP:PrimaryAttack() end
+	SWEP.Icon = "vgui/ttt/icon_randomat"
 end
 
 SWEP.Base = "weapon_tttbase"
@@ -26,13 +24,13 @@ SWEP.AdminSpawnable = true
 SWEP.AutoSwitchFrom = false
 SWEP.AutoSwithTo = false
 
-SWEP.AllowDrop = false
+SWEP.AllowDrop = true
 SWEP.NoSights = true
 SWEP.UseHands = true
 SWEP.CanBuy = {ROLE_DETECTIVE}
 
-SWEP.ViewModel = "models/weapons/gamefreak/c_csgo_c4.mdl"
-SWEP.WorldModel = "models/weapons/gamefreak/w_c4_planted.mdl"
+SWEP.ViewModel = "models/weapons/v_c4.mdl"
+SWEP.WorldModel = "models/weapons/w_c4.mdl"
 SWEP.Weight = 2
 
 SWEP.Primary.Ammo = "none"
@@ -40,21 +38,30 @@ SWEP.Primary.ClipsSize = 1
 SWEP.Primary.DefaultClip = 1
 
 function SWEP:Initialize()
-  util.PrecacheSound("weapons/c4_initiate.wav")
+	util.PrecacheSound("weapons/c4_initiate.wav")
+
+	if CLIENT then
+		self:AddTTT2HUDHelp("ttt2_weapon_randomat_help_msb1")
+	end
 end
 
 function SWEP:PrimaryAttack()
-  if SERVER then
-    minigame = minigames.Select()
-    if not minigame then self:Remove() return end
+	if CLIENT then return end
 
-    ActivateMinigame(minigame)
+	minigame = minigames.Select()
 
-    DamageLog("[TTT2][MINIGAME] : " .. self:GetOwner():Nick() .. " [" .. self:GetOwner():GetRoleString() .. "] used their Randomat X")
-    self:SetNextPrimaryFire(CurTime() + 10)
+	if not minigame then
+		self:Remove()
 
-    self:Remove()
-  end
+		return
+	end
+
+	ActivateMinigame(minigame)
+
+	DamageLog("[TTT2][MINIGAME] : " .. self:GetOwner():Nick() .. " [" .. self:GetOwner():GetRoleString() .. "] used their Randomat X")
+
+	self:SetNextPrimaryFire(CurTime() + 10)
+	self:Remove()
 end
 
 function SWEP:SecondaryAttack()
