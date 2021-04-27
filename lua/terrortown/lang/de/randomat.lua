@@ -1,4 +1,4 @@
-L = LANG.GetLanguageTableReference("deutsch")
+L = LANG.GetLanguageTableReference("de")
 
 L["ttt2_weapon_randomat_name"] = "Randomat MG"
 L["ttt2_weapon_randomat_desc"] = "Nutze diese Waffe um ein zufälliges Minispiel für diese Runde zu starten."
