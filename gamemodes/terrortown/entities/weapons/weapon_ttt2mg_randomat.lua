@@ -49,6 +49,8 @@ function SWEP:PrimaryAttack()
 	local minigame = minigames.Select()
 
 	if minigame then
+		events.Trigger(EVENT_MG_RANDOMAT, self:GetOwner())
+
 		ActivateMinigame(minigame)
 
 		local owner = self:GetOwner()
